@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    <head th:include="layout :: head(title=~{::title})">
+        <title>Questions Edit Page</title>
+    </head>
+    
+    <body th:include="layout :: body(imgsource=@{'/img/test.gif'}, css_class='footer_admin_page')"  th:with="content=~{::content}">
+        <div th:fragment="content">
+            <h4>Create and edit questions:</h4>
+            
+            <span>Type:</span>
+            <input type="text" id="questionTypeInput" name="type" size="10"/>
+            <span>Text:</span>
+            <input type="text" id="questionTextInput" name="text" size="15" />
+            <input type="submit" th:name="${pollId}" value="Create new question" onclick="createQuestionButtonOnclickHandler(this.name)"/>
+            <br><br>
+            <table>
+                <thead>
+                    <tr>
+                        <th> Type </th>
+                        <th> Question </th>
+                        <th> Edit </th>
+                        <th> Delete </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${questionList.empty}">
+                        <td colspan="2"> List is empty </td>
+                    </tr>
+                    <tr th:each="question : ${questionList}">
+                        <td><span th:text="${question.questionType}"> Type </span></td>
+                        <td><span th:text="${question.questionText}"> Text </span></td>
+                        <td>
+                            <form th:action="'../../api/editquestion/'+ ${question.id}" method="get">
+                                <input type="hidden" name="pollId" th:value="${pollId}" />
+                                <input type="submit" value="Edit" />
+                            </form>
+                        </td>
+                        <td>
+                            <input type="submit" th:name="${pollId}" th:id="${question.id}" value="Delete" onclick="deleteQuestionButtonOnclickHandler(this.name, this.id)"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+            <a  th:href="@{/admin.html}" href="/admin.html">Back to previous page</a>
+        </div>
+    </body>
+</html>

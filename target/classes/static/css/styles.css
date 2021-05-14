@@ -1,0 +1,55 @@
+ 
+  /* Stylesheet for the templates. */
+
+    body{               
+        background-color: silver; 
+         background-color: hsla(0, 0%, 78%, 0.5); 
+         border: 2px solid rgb(22,22,22); /* Set thickness of the border = 2px.*/
+         padding: 20px; /* Set indent from the border = 20 px.*/
+         /* Set floating size of the page. It is scaled when the size of the the browser's window is changing.*/
+         width: 95%; 
+        }                            
+             
+    .align-left {
+                  margin-top: -5px;
+                  margin-left: 10px;
+                 }
+
+     #header {
+              margin-top: -70px;
+              margin-left: 150px;
+             }
+
+     .login-error {
+                   color: red;
+                  }
+
+     .logout-success {
+                      color: green;
+                     }
+
+     .footer_all_pages {
+                        margin-left: 10px;
+                        margin-bottom: -10px;
+                        background-color: white;
+                       }
+
+     .footer_login_page {
+                         margin-top: 485px;
+                        }
+
+     .footer_home_page {
+                        margin-top: 385px;
+                       }
+
+     .footer_admin_page {
+                         margin-top: 550px;
+                        }
+
+     .footer_greeting_page {
+                            margin-top: 630px;
+                           }
+
+     .footer_info_page {
+                        margin-top: 640px;
+                       }

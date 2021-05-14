@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    <head th:include="layout :: head(title=~{::title})">
+        <title>Edit question page</title>
+    </head>
+    
+    <body th:include="layout :: body(imgsource=@{'/img/test.gif'}, css_class='footer_admin_page')"  th:with="content=~{::content}">
+        
+        <div th:fragment="content">
+            <h4>Edit question:</h4>
+            <br>
+
+            <span>Type:</span>
+            <input type="text" id="questionTypeInput" name="questionType" size="10" th:value="${questionType}" />
+            <span>Text:</span>
+            <input type="text" id="questionTextInput" name="questionText" size="15" th:value="${questionText}" />
+            <input th:name="${pollId}" th:id="${questionId}" type="submit" value="Update question" onclick="updateQuestionButtonOnclickHandler(this.name, this.id)"/>
+            <br><br>
+            <a  th:href="@{'/api/edittopic/'+${pollId}}" href="/questions.html">Back to previous page</a>
+        </div>
+    </body>
+</html>

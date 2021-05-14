@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    <head th:include="layout :: head(title=~{::title})">
+        <title>Administrator Page</title>        
+    </head>
+    
+    <body th:include="layout :: body(imgsource=@{'/img/test.gif'}, css_class='footer_admin_page')"  th:with="content=~{::content}">
+
+        <div th:fragment="content">
+            <h4>Create and edit topics:</h4>
+            <span>Name:</span>
+            <input id="topicNameInput" type="text" name="name" size="10"/>
+            <span>Description:</span>
+            <input type="text" id="topicDescriptionInput" name="description" size="15" />
+            <input id="createTopicButton" type="submit" value="Create new topic" />
+            <br><br>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th> Name </th>
+                        <th> Description </th>
+                        <th> Edit </th>
+                        <th> Delete </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${pollList.empty}">
+                        <td colspan="2"> List is empty </td>
+                    </tr>
+                    <tr th:each="poll : ${pollList}">
+                        <td><span th:text="${poll.name}"> Name </span></td>
+                        <td><span th:text="${poll.description}"> Description </span></td>
+                        <td>
+                            <form th:action="'api/edittopic/'+ ${poll.id}" method="get">
+                                <input type="submit" value="Edit" />
+                            </form>
+                        </td>
+                        <td>
+                            <input type="submit" th:name="${poll.id}" value="Delete" onclick="deleteTopicButtonOnclickHandler(this.name)"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <a  th:href="@{/home.html}" href="/home.html">Back to home page</a>
+        </div>
+    </body>
+</html>

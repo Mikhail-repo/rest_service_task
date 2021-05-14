@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head th:include="layout :: head(title=~{::title})">
+        <title>Login Page</title>        
+    </head>
+
+    <body th:include="layout :: body(imgsource=@{'/img/test.gif'}, css_class='footer_login_page')"  th:with="content=~{::content}">
+        <div th:fragment="content">
+         
+            <form name="flogin" th:action="@{/login.html}" method="post">
+                <fieldset>
+                    <legend>Login</legend>
+                    
+                    <label for="username">E-mail</label>
+                    <input type="text" id="username" name="username" />
+                      
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" />
+                       
+                    <div th:if="${loginError}" class="login-error">
+                       Invalid username or password.
+                    </div>
+                    
+                    <div th:if="${logoutSuccess}" class="logout-success">
+                        You have been logged out.
+                    </div>
+                       
+                    <div>
+                          <button type="submit">Log in</button>
+                    </div>
+                </fieldset>
+            </form> 
+                
+            <br>
+             <form name="freg" th:action="@{/register}" method="post">
+                <fieldset>
+                  <legend>Registration</legend>
+
+                    <label for="regFirstName">Name</label>
+                    <input type="text" id="regFirstName" name="regFirstName"  required="required"/>
+
+                    <label for="regLastName">Surname</label>
+                    <input type="text" id="regLastName" name="regLastName" required="required"/>
+
+                    <label for="regEmail">Email</label>
+                    <input type="text" id="regEmail" name="regEmail" required="required"/>
+
+                    <label for="regPassword">Password</label>
+                    <input type="password" id="regPassword" name="regPassword" required="required"/>
+
+                    Type:
+                    <select name="regUserAdmin" id="regUserAdmin">
+                         <option value="user">User</option>
+                         <option value="admin">Admin</option>
+                    </select>
+
+                    <div th:if="${regSuccess}" class="logout-success">
+                         You have been successfully registered!
+                    </div>
+
+                    <div th:if="${regError}" class="login-error">
+                           Error occured!
+                    </div>
+
+                    <div th:if="${regAccountAlreadyExist}" class="login-error">
+                        Account with this email already exists. Change email for registration.
+                    </div>
+                    <p>
+                      <button type="submit">Register</button>
+                    </p>
+                </fieldset>
+             </form>
+        </div>
+    </body>
+</html>

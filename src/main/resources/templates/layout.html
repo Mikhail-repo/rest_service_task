@@ -1,0 +1,27 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+  <head th:fragment="head(title)">
+    <title>TestTask - <th:block th:include="${title}"></th:block></title>
+     <link rel="stylesheet" th:href="@{/css/styles.css}" href="../static/css/styles.css" type="text/css"  />
+      <!-- JQuery -->
+      <script src="/RestServiceTask/js/jquery-3.2.1.js">
+      </script>
+      <!-- JS-scripts -->
+      <script src="/RestServiceTask/js/AjaxRq.js">
+      </script>
+  </head>
+
+  <body th:fragment="body(css_class)">
+    <hr>
+      <img  class="align-left" th:src="${imgsource}" src="../static/img/test.gif"/>
+       <h2 id="header">Test task</h2>
+     <br>
+    <hr>
+      <div class="container" th:replace="${content}">
+         Fake content
+      </div>
+      <div class="footer_all_pages" th:classappend="${css_class}">
+      </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    
+    <head th:include="layout :: head(title=~{::title})">
+        <title>Home Page</title>        
+    </head>
+    
+    <body th:include="layout :: body(imgsource=@{'/img/test.gif'}, css_class='footer_home_page')"  th:with="content=~{::content}">
+        <div th:fragment="content">
+            
+             <p>Name: <b><span th:text="${firstName}"></b></p>
+             <p>Surname: <b><span th:text="${lastName}"></b></p>
+             <p>Email: <b><span th:text="${email}"></b></p>             
+             <p>Role: <b><span th:text="${role}"></b></p>
+             <p>
+               <a  th:if="${role} == 'ADMINISTRATOR'" th:href="@{/admin.html}" href="/admin.html">Create and edit Topics</a>
+             </p>
+                  
+             <p>
+                <form  th:action="@{/logout}" method="post">
+                  <input type="submit" value="Log out" />
+                </form>
+             </p>
+        </div>
+    </body>
+</html>

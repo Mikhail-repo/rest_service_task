@@ -1,0 +1,14 @@
+com/soft/config/AppConfig.class
+com/soft/database/UserAccountsDAO.class
+com/soft/database/DatabaseConfig.class
+com/soft/security/UserService.class
+com/soft/config/AppInitializer.class
+com/soft/config/SecurityConfig.class
+com/soft/entity/Poll.class
+com/soft/database/QuestionsDAO.class
+com/soft/config/SecurityWebApplicationInitializer.class
+com/soft/controller/ServiceController.class
+com/soft/entity/Question.class
+com/soft/database/PollsDAO.class
+com/soft/database/UserAccountsDAOImpl.class
+com/soft/security/MyUserDetails.class
