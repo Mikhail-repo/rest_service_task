@@ -7,11 +7,21 @@
  var createTopicButton;
 
   function PagePostConstruct() {
+
+    var select = document.getElementById("editQuestionTypeInput");
+    if(select != null) {
+        var selValue = select.getAttribute("name");
+        var options = select.childNodes;
+        for(var i = 0; i < options.length; i++) {
+          if(options[i].value === selValue)
+            options[i].selected = true;
+        }
+    }
     createTopicButton = document.getElementById("createTopicButton");
     topicNameInput = document.getElementById("topicNameInput");
     topicDescriptionInput = document.getElementById("topicDescriptionInput");
       //Register event's listeners.  
-      SetEventListeners();            
+      SetEventListeners();
   }
 
   function SetEventListeners() {
@@ -59,7 +69,7 @@
   function updateQuestionButtonOnclickHandler(pollId, questionId) {
        var type = "PUT";
        var url = "/RestServiceTask/api/updatequestion/" + questionId;
-       var questionType = document.getElementById("questionTypeInput").value;
+       var questionType = document.getElementById("editQuestionTypeInput").value;
        var questionText = document.getElementById("questionTextInput").value;
        var data = "{\"questionType\": \"" + questionType + "\",  \"questionText\":\"" + questionText + "\"}";
 

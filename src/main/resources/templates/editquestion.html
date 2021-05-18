@@ -12,7 +12,11 @@
             <br>
 
             <span>Type:</span>
-            <input type="text" id="questionTypeInput" name="questionType" size="10" th:value="${questionType}" />
+            <select id="editQuestionTypeInput" th:name="${questionType}">
+                <option value="QUESTION_WITH_TEXT_ANSWER">Question with text answer</option>
+                <option value="QUESTION_WITH_SINGLE_FIXED_ANSWER">Question with single fixed answer</option>
+                <option value="QUESTION_WITH_MULTIPLE_FIXED_ANSWERS">Question with multiple fixed answers</option>
+            </select>
             <span>Text:</span>
             <input type="text" id="questionTextInput" name="questionText" size="15" th:value="${questionText}" />
             <input th:name="${pollId}" th:id="${questionId}" type="submit" value="Update question" onclick="updateQuestionButtonOnclickHandler(this.name, this.id)"/>

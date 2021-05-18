@@ -1,11 +1,15 @@
 package com.soft.controller;
 
+import com.soft.database.AnswersDAO;
 import com.soft.database.PollsDAO;
 import com.soft.database.QuestionsDAO;
 import com.soft.database.UserAccountsDAOImpl;
 import javax.servlet.http.HttpServletRequest;
+
+import com.soft.entity.Answer;
 import com.soft.entity.Poll;
 import com.soft.entity.Question;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import com.soft.security.MyUserDetails;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +29,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 import java.net.URI;
+import java.util.stream.Collectors;
 
 /* REST controller */
 
@@ -36,6 +42,8 @@ public class ServiceController {
     PollsDAO pollsDAO;
     @Autowired
     QuestionsDAO questionsDAO;
+    @Autowired
+    AnswersDAO answersDAO;
 
     @RequestMapping(method=GET, path="/login.html")
     public String renderLoginPage(ModelMap model) {
@@ -160,6 +168,80 @@ public class ServiceController {
         ResponseEntity responseEntity = ResponseEntity.ok().build();
 
      return responseEntity;
+    }
+
+    /** Get topic's list */
+    @RequestMapping(method=GET, path="/api/getalltopics", produces = {"application/json"})
+    public ResponseEntity getAllTopics() {
+
+        ResponseEntity responseEntity;
+        List<Poll> pollList = pollsDAO.getAll();
+        if(pollList == null) responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        else {
+            List<String> pollNames =  pollList.stream().map(p -> p.getName()).collect(Collectors.toList());
+            responseEntity = ResponseEntity.ok().body(pollNames);
+        }
+     return responseEntity;
+    }
+
+    /** Get questions's list. */
+    @RequestMapping(method=GET, path="/api/getquestions/{id}", produces = {"application/json"})
+    public ResponseEntity getTopicQuestions(@PathVariable("id") Integer id) {
+
+        ResponseEntity responseEntity;
+        List<Question> questionList = pollsDAO.getPollQuestionList(id);
+        if(questionList != null && questionList.size() > 0) {
+            List<String> questions = questionList.stream().map(q -> q.getQuestionText()).collect(Collectors.toList());
+            responseEntity = ResponseEntity.ok().body(questions);
+        } else responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+     return responseEntity;
+    }
+
+    /** Create new answer */
+    @RequestMapping(method=POST, path="/api/createanswer", consumes = {"application/xml", "application/json"})
+    public ResponseEntity createAnswer(@RequestBody Answer answer, HttpServletRequest request) {
+
+        answersDAO.createAnswer(answer);
+        ResponseEntity responseEntity = ResponseEntity.created(URI.create("/" + answer.getId())).build();
+
+        return responseEntity;
+    }
+
+    /** Delete answer */
+    @RequestMapping(method=DELETE, path="/api/deleteanswer/{id}")
+    public ResponseEntity deleteAnswer(@PathVariable("id") Integer answerId, HttpServletRequest request, ModelMap model) {
+
+        Answer answer = answersDAO.getAnswerById(answerId);
+        answersDAO.removeAnswer(answer);
+        ResponseEntity responseEntity = ResponseEntity.ok().build();
+
+        return responseEntity;
+    }
+
+    /** Update answer */
+    @RequestMapping(method=PUT, path="/api/updateanswer/{id}", consumes = {"application/xml", "application/json"})
+    public ResponseEntity updateAnswer(@RequestBody Answer answer, @PathVariable("id") Integer id, HttpServletRequest request, ModelMap model) {
+
+        answer.setId(id);
+        answersDAO.updateAnswer(answer);
+        ResponseEntity responseEntity = ResponseEntity.ok().build();
+
+        return responseEntity;
+    }
+
+    /** Get user's answers. */
+    @RequestMapping(method=GET, path="/api/getanswers/{accountId}/{topicId}", produces = {"application/json"})
+    public ResponseEntity getUserTopicAnswers(@PathVariable("accountId") Integer accountId, @PathVariable("topicId") Integer topicId) {
+
+        ResponseEntity responseEntity;
+
+        List<Answer> answerList = answersDAO.getAnswerByUserTopic(accountId, topicId);
+        if(answerList != null && answerList.size() > 0) {
+            responseEntity = ResponseEntity.ok().body(answerList);
+        } else responseEntity = ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
+        return responseEntity;
     }
 
     @RequestMapping("/login-error")

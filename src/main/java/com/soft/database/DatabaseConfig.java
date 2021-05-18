@@ -31,7 +31,7 @@ public class DatabaseConfig {
         localSessionFactoryBean.setDataSource(dataSource);
 
         /* List of entities. */
-        localSessionFactoryBean.setAnnotatedClasses(com.soft.security.MyUserDetails.class, com.soft.entity.Poll.class, com.soft.entity.Question.class);
+        localSessionFactoryBean.setAnnotatedClasses(com.soft.security.MyUserDetails.class, com.soft.entity.Poll.class, com.soft.entity.Question.class, com.soft.entity.Answer.class);
         Properties properties = new Properties();
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         localSessionFactoryBean.setHibernateProperties(properties);
@@ -43,7 +43,6 @@ public class DatabaseConfig {
     @Bean
     @DependsOn("SessionFactory")
     public UserAccountsDAOImpl getUserAccountsDAO(SessionFactory sessionFactory) {
-
          UserAccountsDAOImpl userAccountsDAO = new UserAccountsDAOImpl();
          userAccountsDAO.setSessionFactory(sessionFactory);
      return userAccountsDAO;
@@ -52,7 +51,6 @@ public class DatabaseConfig {
     @Bean
     @DependsOn("SessionFactory")
     public PollsDAO getPollDAO(SessionFactory sessionFactory) {
-
         PollsDAO pollsDAO = new PollsDAO();
         pollsDAO.setSessionFactory(sessionFactory);
      return pollsDAO;
@@ -61,10 +59,17 @@ public class DatabaseConfig {
     @Bean
     @DependsOn("SessionFactory")
     public QuestionsDAO getQuestionsDAO(SessionFactory sessionFactory) {
-
         QuestionsDAO questionsDAO = new QuestionsDAO();
         questionsDAO.setSessionFactory(sessionFactory);
      return questionsDAO;
+    }
+
+    @Bean
+    @DependsOn("SessionFactory")
+    public AnswersDAO getAnswersDAO(SessionFactory sessionFactory) {
+        AnswersDAO answersDAO = new AnswersDAO();
+        answersDAO.setSessionFactory(sessionFactory);
+        return answersDAO;
     }
 }
 

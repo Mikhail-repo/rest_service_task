@@ -38,7 +38,6 @@ public class PollsDAO {
         }
     }
 
-
     public void deletePoll(Poll poll) {
 
         Session session;
@@ -53,7 +52,6 @@ public class PollsDAO {
             e.printStackTrace();
         }
     }
-
 
     public void updatePoll(Poll poll) {
 

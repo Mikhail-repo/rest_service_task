@@ -25,9 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http
          .authorizeRequests()
-             .antMatchers("/register").permitAll() //Permit requests for info.html and registration.
-             .antMatchers("/home.html").hasAnyAuthority("USER","ADMIN")
-             .antMatchers("/admin.html", "/questions.html", "/editquestion.html", "/api/createtopic", "/api/deletetopic", "/api/edittopic/", "/api/createquestion", "/api/deletequestion", "/api/editquestion", "/savequestion").hasAuthority("ADMIN")
+             .antMatchers("/register").permitAll()
+             .antMatchers("/home.html", "/api/getalltopics", "/api/createanswer").hasAnyAuthority("USER","ADMIN")
+             .antMatchers("/admin.html", "/questions.html", "/editquestion.html", "/api/createtopic", "/api/deletetopic", "/api/edittopic/", "/api/createquestion", "/api/deletequestion", "/api/editquestion", "/api/updatequestion").hasAuthority("ADMIN")
              .anyRequest().authenticated()
          .and().formLogin()
              .loginPage("/login.html")

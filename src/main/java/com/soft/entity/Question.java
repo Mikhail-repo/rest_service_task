@@ -1,5 +1,6 @@
 package com.soft.entity;
 
+import com.soft.model.QuestionType;
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Question {
         private Integer id;
 
         @Column(name = "questiontype")
-        private String questionType;
+        private QuestionType questionType;
 
         @Column(name = "questiontext")
         private String questionText;
@@ -28,18 +29,13 @@ public class Question {
         public Question() {
         }
 
-        public Question(String questionType, String questionText) {
-                this.questionType = questionType;
-                this.questionText = questionText;
-        }
-
-        public Question(String questionType, String questionText, List<Poll> pollList) {
+        public Question(QuestionType questionType, String questionText, List<Poll> pollList) {
                 this.questionType = questionType;
                 this.questionText = questionText;
                 this.pollList = pollList;
         }
 
-        public Question(Integer id, String questionType, String questionText, List<Poll> pollList) {
+        public Question(Integer id, QuestionType questionType, String questionText, List<Poll> pollList) {
                 this.id = id;
                 this.questionType = questionType;
                 this.questionText = questionText;
@@ -54,11 +50,11 @@ public class Question {
                 this.id = id;
         }
 
-        public String getQuestionType() {
+        public QuestionType getQuestionType() {
                 return questionType;
         }
 
-        public void setQuestionType(String questionType) {
+        public void setQuestionType(QuestionType questionType) {
                 this.questionType = questionType;
         }
 

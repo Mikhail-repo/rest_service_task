@@ -10,7 +10,11 @@
             <h4>Create and edit questions:</h4>
             
             <span>Type:</span>
-            <input type="text" id="questionTypeInput" name="type" size="10"/>
+            <select name="questionTypeInput" id="questionTypeInput">
+                <option value="QUESTION_WITH_TEXT_ANSWER">Question with text answer</option>
+                <option value="QUESTION_WITH_SINGLE_FIXED_ANSWER">Question with single fixed answer</option>
+                <option value="QUESTION_WITH_MULTIPLE_FIXED_ANSWERS">Question with multiple fixed answers</option>
+            </select>
             <span>Text:</span>
             <input type="text" id="questionTextInput" name="text" size="15" />
             <input type="submit" th:name="${pollId}" value="Create new question" onclick="createQuestionButtonOnclickHandler(this.name)"/>

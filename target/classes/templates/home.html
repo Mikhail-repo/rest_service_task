@@ -15,7 +15,6 @@
              <p>
                <a  th:if="${role} == 'ADMINISTRATOR'" th:href="@{/admin.html}" href="/admin.html">Create and edit Topics</a>
              </p>
-                  
              <p>
                 <form  th:action="@{/logout}" method="post">
                   <input type="submit" value="Log out" />
